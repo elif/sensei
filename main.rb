@@ -1,4 +1,7 @@
 # coding: utf-8
+require 'net/http'
+require 'json'
+
 # Set up initial message
 messages = [
     {
