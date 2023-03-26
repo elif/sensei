@@ -18,7 +18,7 @@ gpt_api_key = File.read("gpt_api_key").strip
 
 # Continuously prompt for input and respond
 loop do
-    print 'You: '
+    print "You (#{messages.length}): "
     input = gets.chomp
 
     # Add user message to messages array
@@ -34,7 +34,7 @@ loop do
     request["Authorization"] = "Bearer #{gpt_api_key}"
     request.body = {
         messages: messages,
-        max_tokens: 3000,
+        max_tokens: 4000,
         model: 'gpt-3.5-turbo'
     }.to_json
 
@@ -57,4 +57,6 @@ loop do
         role: 'system',
         content: answer
     }
+    # retain prompt but prune user messages and responses
+    messages.delete_at(1) while messages.flatten.join.length > 10000
 end
