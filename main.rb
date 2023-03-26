@@ -1,3 +1,4 @@
+# coding: utf-8
 # Set up initial message
 messages = [
     {
@@ -9,6 +10,8 @@ For each user message, you should first correct any mistakes in their Japanese a
 For example, if the user says 'konichiwa', you should respond with 'こんにちは。(Konnichiwa) [Hello]' which is the corrected version of the user message, followed by a newline, and then a roleplaying response such as: '元気ですか ？ (Genki desu ka?) [How are you?]'."
     }
 ]
+
+gpt_api_key = File.read("gpt_api_key").strip
 
 # Continuously prompt for input and respond
 loop do
@@ -25,7 +28,7 @@ loop do
     uri = URI.parse("https://api.openai.com/v1/chat/completions")
     request = Net::HTTP::Post.new(uri)
     request.content_type = "application/json"
-    request["Authorization"] = "Bearer #{File.read("api_key").strip}"
+    request["Authorization"] = "Bearer #{gpt_api_key}"
     request.body = {
         messages: messages,
         max_tokens: 3000,
